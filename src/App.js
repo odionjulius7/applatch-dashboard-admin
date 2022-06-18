@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+// import "./App.css";
+import Footer from "./Components/Footer";
+import SidebarNav from "./Components/SidebarNav";
+import Dashboard from "./Pages/Dashboard";
+import SingleUser from "./Pages/SingleUser";
+
+import Users from "./Pages/Users";
+import Virality from "./Pages/Virality";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="main-wrapper">
+        <SidebarNav />
+        <div className="page-wrapper">
+          <div className="page-content">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/virality" element={<Virality />} />
+              {/* <Route path="/singleUser" element={<SingleUser />} /> */}
+              <Route
+                path="/users/singleUser/:userId"
+                element={<SingleUser />}
+              />
+              <Route path="/users" element={<Users />} />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "20rem", fontSize: "3rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
