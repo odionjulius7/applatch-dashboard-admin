@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function AccountabilityPartner({ accountabilityPartner }) {
-  console.log(accountabilityPartner);
+  // console.log(accountabilityPartner);
   return (
     <div className="row profile-body">
       <div className="col-md-8 col-xl-6 mx-auto middle-wrapper post-wrapper">
@@ -17,9 +17,9 @@ export default function AccountabilityPartner({ accountabilityPartner }) {
                         style={{ fontSize: "1rem", fontWeight: "700" }}
                         className=""
                       >
-                        {accountabilityPartner.name}
+                        {accountabilityPartner?.name}
                       </p>
-                      <p className="tx-16">{accountabilityPartner.email}</p>
+                      <p className="tx-16">{accountabilityPartner?.email}</p>
                     </div>
                   </div>
                 </div>

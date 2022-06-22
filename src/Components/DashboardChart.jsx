@@ -5,7 +5,7 @@ import NewUsers from "./Charts/NewUsers";
 export default function DashboardChart() {
   return (
     <div className="row">
-      <div className="col-md-6 grid-margin stretch-card">
+      <div className="col-lg-6 col-md-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-start mb-2">
@@ -20,7 +20,7 @@ export default function DashboardChart() {
           </div>
         </div>
       </div>
-      <div className="col-md-6 grid-margin stretch-card">
+      <div className="col-lg-6 col-md-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-start mb-2">

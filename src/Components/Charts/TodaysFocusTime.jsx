@@ -61,7 +61,7 @@ export default function TodaysFocusTime() {
   return (
     <>
       <div>
-        <h3>Today's Phone Analyses</h3>
+        <h3>Today's Focus Time</h3>
       </div>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart

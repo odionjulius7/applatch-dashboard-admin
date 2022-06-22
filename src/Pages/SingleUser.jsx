@@ -19,6 +19,38 @@ export default function SingleUser() {
   const [accountability, setAccountability] = useState(false);
   const [analyses, setAnalyses] = useState(false);
 
+  // const [profile, setProfile] = useState(() => {
+  //   // getting stored value
+
+  //   const saved1 = localStorage.getItem("profile");
+  //   const initialValue = JSON.parse(saved1);
+  //   return initialValue || false;
+  // });
+
+  // const [addictive, setAddictive] = useState(() => {
+  //   // getting stored value
+
+  //   const saved2 = localStorage.getItem("addictive");
+  //   const initialValue = JSON.parse(saved2);
+  //   return initialValue || false;
+  // });
+
+  // const [accountability, setAccountability] = useState(() => {
+  //   // getting stored value
+
+  //   const saved3 = localStorage.getItem("accountability");
+  //   const initialValue = JSON.parse(saved3);
+  //   return initialValue || false;
+  // });
+
+  // const [analyses, setAnalyses] = useState(() => {
+  //   // getting stored value
+
+  //   const saved4 = localStorage.getItem("analyses");
+  //   const initialValue = JSON.parse(saved4);
+  //   return initialValue || false;
+  // });
+
   //
   const [user, setUser] = useState(null);
   const { userId } = useParams();
@@ -30,10 +62,10 @@ export default function SingleUser() {
 
   // console.log(user);
   useEffect(() => {
-    localStorage.setItem("profile", profile);
-    localStorage.setItem("addictive", addictive);
-    localStorage.setItem("accountability", accountability);
-    localStorage.setItem("analyses", analyses);
+    localStorage.setItem("profile", JSON.stringify(profile));
+    localStorage.setItem("addictive", JSON.stringify(addictive));
+    localStorage.setItem("accountability", JSON.stringify(accountability));
+    localStorage.setItem("analyses", JSON.stringify(analyses));
   }, [profile, addictive, accountability, analyses]);
 
   return (

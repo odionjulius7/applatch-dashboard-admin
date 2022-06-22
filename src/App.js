@@ -6,12 +6,16 @@ import SingleUser from "./Pages/SingleUser";
 
 import Users from "./Pages/Users";
 import Virality from "./Pages/Virality";
+import SignUp from "./Pages/SignUP/SignUp";
+import Login from "./Pages/Login/Login";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
+      {/* <SignUp />
+      <Login /> */}
       <div className="main-wrapper">
         <SidebarNav />
         <div className="page-wrapper">
@@ -19,7 +23,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/virality" element={<Virality />} />
-              {/* <Route path="/singleUser" element={<SingleUser />} /> */}
               <Route
                 path="/users/singleUser/:userId"
                 element={<SingleUser />}

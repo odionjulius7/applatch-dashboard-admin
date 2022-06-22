@@ -75,7 +75,7 @@ export default function SidebarNav() {
           <li className="nav-item nav-category">Account</li>
 
           <li className="nav-item">
-            <a href="logout.html" className="nav-link">
+            <a href="" className="nav-link">
               <FiLogOut className="link-icon" />
               <span className="link-title">Sign Out</span>
             </a>
