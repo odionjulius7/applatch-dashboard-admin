@@ -9,40 +9,49 @@ import Virality from "./Pages/Virality";
 import SignUp from "./Pages/SignUP/SignUp";
 import Login from "./Pages/Login/Login";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { Layout } from "./Layout";
+import RequireAuth from "./Components/RequireAuth";
+
+//
+const USERS_URL = "/users";
 
 function App() {
   return (
-    <BrowserRouter>
-      {/* <SignUp />
-      <Login /> */}
-      <div className="main-wrapper">
-        <SidebarNav />
-        <div className="page-wrapper">
-          <div className="page-content">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/virality" element={<Virality />} />
-              <Route
-                path="/users/singleUser/:userId"
-                element={<SingleUser />}
-              />
-              <Route path="/users" element={<Users />} />
-              <Route
+    <div className="main-wrapper">
+      <SidebarNav />
+      <div className="page-wrapper">
+        <div className="page-content">
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="login" element={<Login />} />
+              <Route element={<RequireAuth />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="virality" element={<Virality />} />
+                <Route path="users" element={<Users />} />
+                <Route
+                  path="users/singleUser/:userId"
+                  element={<SingleUser />}
+                />
+              </Route>
+            </Route>
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+{
+  /* <Route
                 path="*"
                 element={
                   <main style={{ padding: "20rem", fontSize: "3rem" }}>
                     <p>There's nothing here!</p>
                   </main>
                 }
-              />
-            </Routes>
-          </div>
-          <Footer />
-        </div>
-      </div>
-    </BrowserRouter>
-  );
+              /> */
 }
-
-export default App;

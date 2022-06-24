@@ -25,7 +25,7 @@ export default function DashboardTable({ users }) {
                 </thead>
                 <tbody>
                   {users?.map((item, index) => {
-                    console.log(item);
+                    // console.log(item);
                     return (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
