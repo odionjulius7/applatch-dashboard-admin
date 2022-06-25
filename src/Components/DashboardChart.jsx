@@ -6,65 +6,6 @@ import axios from "../API/axios";
 const MONTHLY_USERS_URL = "/users/month";
 
 export default function DashboardChart() {
-  // const dataMain = [
-  //   {
-  //     name: "Jan",
-
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: "Feb",
-
-  //     amt: 2210,
-  //   },
-  //   {
-  //     name: "Mar",
-
-  //     amt: 11290,
-  //   },
-  //   {
-  //     name: "Apr",
-
-  //     amt: 2000,
-  //   },
-  //   {
-  //     name: "May",
-  //     amt: 2181,
-  //   },
-  //   {
-  //     name: "June",
-
-  //     amt: 2500,
-  //   },
-  //   {
-  //     name: "Jul",
-
-  //     amt: 8100,
-  //   },
-  //   {
-  //     name: "Aug",
-
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: "Sept",
-
-  //     amt: 200,
-  //   },
-  //   {
-  //     name: "Oct",
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: "Nov",
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: "Dec",
-  //     amt: 2400,
-  //   },
-  // ];
-
   const [dataMain, setDataMain] = useState([]);
 
   const fetchUsersMonthly = async () => {
@@ -75,7 +16,7 @@ export default function DashboardChart() {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       const { data } = response?.data;
       const data1 = Object.entries(data).map((item) => {
         return {

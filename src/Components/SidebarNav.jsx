@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiCodesandbox, FiUsers, FiLogOut } from "react-icons/fi";
-import UseAuth from "../Hooks/UseAuth";
 
+import { SiGnuprivacyguard } from "react-icons/si";
 export default function SidebarNav() {
   const [dashboradActive, setDashboradActive] = useState(
     JSON.parse(localStorage.getItem("dashboradActive")) || false
@@ -107,7 +107,7 @@ export default function SidebarNav() {
                 setDashboradActive(false);
               }}
             >
-              <FiLogOut className="link-icon" />
+              <SiGnuprivacyguard className="link-icon" />
               <span className="link-title">Register</span>
             </Link>
           </li>

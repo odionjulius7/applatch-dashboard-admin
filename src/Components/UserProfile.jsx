@@ -5,11 +5,11 @@ export default function UserProfile({
   name,
   createdAt,
   email,
-  number,
   lockNow,
   scheduleLock,
   lockDaily,
 }) {
+  // console.log(lockNow);
   return (
     <div className="row profile-body">
       <div className="mb-4 col-md-4 col-xl-3 left-wrapper">
@@ -39,12 +39,6 @@ export default function UserProfile({
               </label>
               <p className="text-muted">{email}</p>
             </div>
-            <div className="mt-3">
-              <label className="tx-11 font-weight-bold mb-0 text-uppercase">
-                Phone Number:
-              </label>
-              <p className="text-muted">{number}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -57,44 +51,183 @@ export default function UserProfile({
                 <div className="d-flex align-items-start justify-content-between">
                   <div className="d-flex align-items-start">
                     <h6>
-                      <span className="badge badge-primary ">Lock History</span>
+                      <span className="badge badge-primary ">
+                        Lock Now History
+                      </span>
                     </h6>
                   </div>
                 </div>
               </div>
               <div className="card-body">
-                <p className="">
-                  Consectetur adipisicing elit accusamus minima delectus nemo
-                  unde quae...
-                </p>
-                <p className="">
-                  Consectetur adipisicing elit accusamus minima delectus nemo
-                  unde quae...
-                </p>
-                <p className="">
-                  Consectetur adipisicing elit accusamus minima delectus nemo
-                  unde quae...{" "}
-                  <a className="read-more" href="javasvript:;">
-                    See More
-                  </a>
-                </p>
-
-                {/* <!-- <img className="img-fluid" src="./assets/images/sample1.jpg" alt=""> --> */}
-              </div>
-              <div className="card-footer">
-                <div className="d-flex post-actions">
-                  <span className="d-flex align-items-center text-muted mr-4">
-                    <i className="icon-md" data-feather="thumbs-up"></i>
-                    <p className="ml-2">1</p>
-                  </span>
-                  <span className="d-flex align-items-center text-muted mr-4">
-                    <i className="icon-md" data-feather="thumbs-down"></i>
-                    <p className="ml-2">0</p>
-                  </span>
+                <div>
+                  {lockNow.map((item) => {
+                    return (
+                      <>
+                        <div
+                          key={item.id}
+                          className="d-flex justify-content-between"
+                        >
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              {" "}
+                              Date:
+                            </span>{" "}
+                            {moment(item.createdAt).format("LLL")}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Status:
+                            </span>{" "}
+                            {item.status}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Duration:
+                            </span>{" "}
+                            {item.duration}hr
+                          </p>
+                        </div>
+                        <hr />
+                      </>
+                    );
+                  })}
                 </div>
               </div>
             </div>
           </div>
+          {/*  */}
+          <div className="col-md-12 grid-margin">
+            <div className="card rounded">
+              <div className="card-header">
+                {/* <!-- <h6><span className="badge badge-pill badge-light mb-2">Medicine and Surgery, 100 Level, University of Lagos</span></h6> --> */}
+                <div className="d-flex align-items-start justify-content-between">
+                  <div className="d-flex align-items-start">
+                    <h6>
+                      <span className="badge badge-primary ">
+                        Lock By Daily Limit History
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <div className="card-body">
+                <div>
+                  {/* <p className="">Lock By Daily Limit:</p> */}
+                  {lockDaily.map((item) => {
+                    return (
+                      <>
+                        <div
+                          key={item.id}
+                          className="d-flex justify-content-between"
+                        >
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              {" "}
+                              Date:
+                            </span>{" "}
+                            {moment(item.createdAt).format("LLL")}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Status:
+                            </span>{" "}
+                            {item.status}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Duration:
+                            </span>{" "}
+                            {item.duration}hr
+                          </p>
+                        </div>
+                        <hr />
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-12 grid-margin">
+            <div className="card rounded">
+              <div className="card-header">
+                {/* <!-- <h6><span className="badge badge-pill badge-light mb-2">Medicine and Surgery, 100 Level, University of Lagos</span></h6> --> */}
+                <div className="d-flex align-items-start justify-content-between">
+                  <div className="d-flex align-items-start">
+                    <h6>
+                      <span className="badge badge-primary ">
+                        Schedule Lock History
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <div className="card-body">
+                <div>
+                  {/* <p className="">Schedule Lock:</p> */}
+                  {scheduleLock.map((item) => {
+                    return (
+                      <>
+                        <div
+                          key={item.id}
+                          className="d-flex justify-content-between"
+                        >
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              {" "}
+                              Date:
+                            </span>{" "}
+                            {moment(item.createdAt).format("LLL")}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Status:
+                            </span>{" "}
+                            {item.status}
+                          </p>
+                          <p className="">
+                            <span
+                              style={{ fontSize: "15px" }}
+                              className="pr-2 badge"
+                            >
+                              Duration:
+                            </span>{" "}
+                            {item.duration}hr
+                          </p>
+                        </div>
+                        <hr />
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*  */}
         </div>
       </div>
       <div className="col-xl-3 right-wrapper">
