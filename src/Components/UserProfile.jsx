@@ -1,14 +1,14 @@
 import React from "react";
+import moment from "moment";
 
 export default function UserProfile({
   name,
-  img,
-  joined,
+  createdAt,
   email,
   number,
-  numberOfLockNow,
-  NumOfSchedule,
-  numOfLockByDailyLImit,
+  lockNow,
+  scheduleLock,
+  lockDaily,
 }) {
   return (
     <div className="row profile-body">
@@ -17,17 +17,21 @@ export default function UserProfile({
           <div className="card-body">
             <div className="d-flex align-items-center justify-content-between mb-2"></div>
 
-            <img className="profile-pic" src={img} alt="profile" />
-            <div className="mt-3">
+            {/* <img className="profile-pic" src={img} alt="profile" /> */}
+            {/* <div className="mt-3">
               <h6 className="profile-name">{name}</h6>
-              {/* <!-- <p className="text-muted mt-2">Hi! I'm a Medical Student at Unilag. I hope to and learn from the interactions on this app.</p> -->
-                                        <!-- <a href="#" className="btn btn-primary btn-icon-text mt-3" onclick="showSwal('verify-sensei')"><i data-feather="check-circle" className="btn-icon-prepend"></i>Verify as Sensei</a> --> */}
+             </div> */}
+            <div className="mt-3">
+              <label className="tx-11 font-weight-bold mb-0 text-uppercase">
+                Name:
+              </label>
+              <p className="text-muted">{name}</p>
             </div>
             <div className="mt-3">
               <label className="tx-11 font-weight-bold mb-0 text-uppercase">
                 Joined:
               </label>
-              <p className="text-muted">{joined}</p>
+              <p className="text-muted">{moment(createdAt).format("ll")}</p>
             </div>
             <div className="mt-3">
               <label className="tx-11 font-weight-bold mb-0 text-uppercase">
@@ -99,7 +103,7 @@ export default function UserProfile({
             <div className="card card-stat card-stat-question">
               <div className="card-body">
                 <h6 className="card-title">lock by daily limit</h6>
-                <h3 className="">{numOfLockByDailyLImit}</h3>
+                <h3 className="">{lockDaily.length}</h3>
               </div>
             </div>
           </div>
@@ -107,7 +111,7 @@ export default function UserProfile({
             <div className="card card-stat card-stat-article">
               <div className="card-body">
                 <h6 className="card-title">Schedule Lock</h6>
-                <h3 className="">{NumOfSchedule}</h3>
+                <h3 className="">{scheduleLock.length}</h3>
               </div>
             </div>
           </div>
@@ -115,7 +119,7 @@ export default function UserProfile({
             <div className="card card-stat card-stat-answer">
               <div className="card-body">
                 <h6 className="card-title">Lock Now</h6>
-                <h3 className="">{numberOfLockNow}</h3>
+                <h3 className="">{lockNow.length}</h3>
               </div>
             </div>
           </div>

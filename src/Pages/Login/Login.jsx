@@ -9,7 +9,7 @@ import UseAuth from "../../Hooks/UseAuth";
 const LOGIN_URL = "/login";
 
 const Login = () => {
-  const { auth, setAuth } = UseAuth();
+  const { logged, setLogged } = UseAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,6 +21,7 @@ const Login = () => {
     password: "",
   });
   const [errMsg, setErrMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputs = [
     {
@@ -51,27 +52,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const { email, password } = values;
 
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        { email, password }
-        // JSON.stringify({ email, password }),
-        // {
-        //   headers: { "Content-Type": "application/json" },
-        //   // withCredentials: true,
-        // }
-      );
-      const accessToken = response.data.token;
-      setAuth({ email, accessToken });
-      localStorage.setItem("token", auth.accessToken);
+      const response = await axios.post(LOGIN_URL, { email, password });
+      const { data } = response.data;
+      localStorage.setItem("data", JSON.stringify(data?.token));
       setValues({
         email: "",
         password: "",
       });
-      // navigates to where the user clicked before redirected to home page or the '/""
+      setIsLoading(true);
+      setErrMsg(response?.data.message);
+      // navigates to where the user clicked before redirected to home page or the '/'
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
@@ -80,6 +74,7 @@ const Login = () => {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
+        console.log(errMsg);
       } else {
         setErrMsg("Login Failed");
       }
@@ -98,12 +93,8 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        <button>Submit</button>
-        {/* <div className="goToSignUp">
-          <Link to="/signup">
-            <span>Sign Up first</span>
-          </Link>
-        </div> */}
+        <button>{isLoading ? "Loading" : "Submit"}</button>
+        <p style={{ color: "red" }}>{errMsg}</p>
       </form>
     </div>
   );

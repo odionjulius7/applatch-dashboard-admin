@@ -3,70 +3,108 @@ import AccountabilityPartner from "../Components/AccountabilityPartner";
 import PhoneUsageAnalyses from "../Components/PhoneUsageAnalyses";
 import UserAddictive from "../Components/UserAddictive";
 import UserProfile from "../Components/UserProfile";
+import axios from "../API/axios";
 //
-
+// import axios from "axios";
 import { FiColumns, FiHeart, FiMessageSquare } from "react-icons/fi";
 import { AiOutlineBarChart } from "react-icons/ai";
-import { getUsers } from "../Data";
 
 import { useParams } from "react-router-dom";
 
 export default function SingleUser() {
-  let data = getUsers();
-  // activeClass && Displayed components
   const [profile, setProfile] = useState(true);
   const [addictive, setAddictive] = useState(false);
   const [accountability, setAccountability] = useState(false);
   const [analyses, setAnalyses] = useState(false);
-
-  // const [profile, setProfile] = useState(() => {
-  //   // getting stored value
-
-  //   const saved1 = localStorage.getItem("profile");
-  //   const initialValue = JSON.parse(saved1);
-  //   return initialValue || false;
-  // });
-
-  // const [addictive, setAddictive] = useState(() => {
-  //   // getting stored value
-
-  //   const saved2 = localStorage.getItem("addictive");
-  //   const initialValue = JSON.parse(saved2);
-  //   return initialValue || false;
-  // });
-
-  // const [accountability, setAccountability] = useState(() => {
-  //   // getting stored value
-
-  //   const saved3 = localStorage.getItem("accountability");
-  //   const initialValue = JSON.parse(saved3);
-  //   return initialValue || false;
-  // });
-
-  // const [analyses, setAnalyses] = useState(() => {
-  //   // getting stored value
-
-  //   const saved4 = localStorage.getItem("analyses");
-  //   const initialValue = JSON.parse(saved4);
-  //   return initialValue || false;
-  // });
-
   //
-  const [user, setUser] = useState(null);
+  const USER_DETAILS_ID = "/user";
+  const LOCK_NOW_HISTORY = "/lockhistory";
+  const LOCK_DAILY_HISTORY = "/lockdailyhistory";
+  const SCHEDULE_LOCK_HISTORY = "/schedulelockhistory";
+  //
   const { userId } = useParams();
+  const [user, setUser] = useState(null);
+  const [lockNow, setLockNow] = useState([]);
+  const [lockDaily, setLockDaily] = useState([]);
+  const [scheduleLock, setScheduleLock] = useState([]);
+
+  const fetchUserById = async () => {
+    try {
+      const response = await axios.get(`${USER_DETAILS_ID}/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+        },
+      });
+      // console.log(response.data);
+      const { data } = response?.data;
+      setUser(data);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
+  const lockedNowHistory = async () => {
+    try {
+      const response = await axios.get(`${LOCK_NOW_HISTORY}/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+        },
+      });
+      const { data } = response?.data;
+
+      setLockNow(data);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
+  const lockDailyHistory = async () => {
+    try {
+      const response = await axios.get(`${LOCK_DAILY_HISTORY}/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+        },
+      });
+      const { data } = response?.data;
+      // console.log(data);
+      setLockDaily(data);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
+  const scheduleLockHistory = async () => {
+    try {
+      const response = await axios.get(`${LOCK_DAILY_HISTORY}/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+        },
+      });
+      const { data } = response?.data;
+      // console.log(data);
+      setScheduleLock(data);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
 
   useEffect(() => {
-    const newPerson = data.find((person) => person.id === parseInt(userId));
-    setUser(newPerson);
-  }, [userId, data]);
+    fetchUserById();
+    lockedNowHistory();
+    lockDailyHistory();
+    scheduleLockHistory();
+  }, [userId]);
 
-  // console.log(user);
-  useEffect(() => {
-    localStorage.setItem("profile", JSON.stringify(profile));
-    localStorage.setItem("addictive", JSON.stringify(addictive));
-    localStorage.setItem("accountability", JSON.stringify(accountability));
-    localStorage.setItem("analyses", JSON.stringify(analyses));
-  }, [profile, addictive, accountability, analyses]);
+  // useEffect(() => {
+  //   localStorage.setItem("profile", JSON.stringify(profile));
+  //   localStorage.setItem("addictive", JSON.stringify(addictive));
+  //   localStorage.setItem("accountability", JSON.stringify(accountability));
+  //   localStorage.setItem("analyses", JSON.stringify(analyses));
+  // }, [profile, addictive, accountability, analyses]);
 
   return (
     <div className="profile-page tx-13">
@@ -156,7 +194,14 @@ export default function SingleUser() {
           </div>
         </div>
       </div>
-      {profile && <UserProfile {...user} />}
+      {profile && (
+        <UserProfile
+          scheduleLock={scheduleLock}
+          lockDaily={lockDaily}
+          lockNow={lockNow}
+          {...user}
+        />
+      )}
       {addictive && <UserAddictive {...user} />}
       {accountability && <AccountabilityPartner {...user} />}
       {analyses && <PhoneUsageAnalyses />}

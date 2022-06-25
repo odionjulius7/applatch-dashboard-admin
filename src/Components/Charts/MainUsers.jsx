@@ -10,65 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Jan",
-
-    amt: 2400,
-  },
-  {
-    name: "Feb",
-
-    amt: 2210,
-  },
-  {
-    name: "Mar",
-
-    amt: 11290,
-  },
-  {
-    name: "Apr",
-
-    amt: 2000,
-  },
-  {
-    name: "May",
-    amt: 2181,
-  },
-  {
-    name: "June",
-
-    amt: 2500,
-  },
-  {
-    name: "Jul",
-
-    amt: 8100,
-  },
-  {
-    name: "Aug",
-
-    amt: 2400,
-  },
-  {
-    name: "Sept",
-
-    amt: 200,
-  },
-  {
-    name: "Oct",
-    amt: 2400,
-  },
-  {
-    name: "Nov",
-    amt: 2400,
-  },
-  {
-    name: "Dec",
-    amt: 2400,
-  },
-];
-
 const getIntroOfPage = (label) => {
   if (label === "Jan") {
     return "Most Number Of Users For Jan";
@@ -129,11 +70,11 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function MainUsers() {
+export default function MainUsers({ dataMain }) {
   return (
     <ResponsiveContainer width="95%" height={300}>
       <BarChart
-        data={data}
+        data={dataMain}
         margin={{
           top: -10,
           right: -10,

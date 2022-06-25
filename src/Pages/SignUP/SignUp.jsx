@@ -1,10 +1,10 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
 import "./SignUp.css";
-import axios from "axios";
+import axios from "../../API/axios";
 
 //
-const REGISTER_URL = "https://backend.applatch.com/api/v1/user/admin/signup";
+const REGISTER_URL = "/signup";
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -18,17 +18,6 @@ const SignUp = () => {
   const [success, setSuccess] = useState(false);
 
   const inputs = [
-    // {
-    //   id: 1,
-    //   name: "username",
-    //   type: "text",
-    //   placeholder: "Username",
-    //   errorMessage:
-    //     "Username should be 3-16 characters and shouldn't include any special character!",
-    //   label: "Username",
-    //   pattern: "^[A-Za-z0-9]{3,16}$",
-    //   required: true,
-    // },
     {
       // the email is required
       id: 2,
@@ -51,38 +40,29 @@ const SignUp = () => {
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
-    // {
-    //   id: 5,
-    //   name: "confirmPassword",
-    //   type: "password",
-    //   placeholder: "Confirm Password",
-    //   errorMessage: "Passwords don't match!",
-    //   label: "Confirm Password",
-    //   pattern: values.password, // we pass the password to it and if what we typed doesn't match the value passed the the pattern irs wrong
-    //   required: true,
-    // },
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { email, password } = values;
-    console.log(email, password);
 
     try {
       const response = await axios.post(
         REGISTER_URL,
         { email, password },
         {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+          },
         }
       );
-      // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      setSuccess(true);
-      //clear state and controlled inputs
-      setValues({});
+      console.log(response);
+      setErrMsg(response?.data.message);
+      // setValues({
+      //   email: "",
+      //   password: "",
+      // });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -111,6 +91,7 @@ const SignUp = () => {
           />
         ))}
         <button>Submit</button>
+        <p style={{ color: "#7a1a1a", fontSize: "25px" }}>{errMsg}</p>
       </form>
     </div>
   );

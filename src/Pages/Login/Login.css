@@ -15,7 +15,7 @@
   background-position: center;
 }
 
-.goToSignUp {
+/* .goToSignUp {
   cursor: pointer;
   background: gray;
   width: 100px;
@@ -35,7 +35,7 @@
 
 .goToSignUp span:hover {
   color: beige;
-}
+} */
 
 form {
   background-color: white;

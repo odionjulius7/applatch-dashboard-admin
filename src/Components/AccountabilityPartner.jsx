@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AccountabilityPartner({ accountabilityPartner }) {
+export default function AccountabilityPartner({ partner_email }) {
   // console.log(accountabilityPartner);
   return (
     <div className="row profile-body">
@@ -17,9 +17,14 @@ export default function AccountabilityPartner({ accountabilityPartner }) {
                         style={{ fontSize: "1rem", fontWeight: "700" }}
                         className=""
                       >
-                        {accountabilityPartner?.name}
+                        Email:
+                        {/* {accountabilityPartner?.name} */}
                       </p>
-                      <p className="tx-16">{accountabilityPartner?.email}</p>
+                      {partner_email === "" ? (
+                        <p>No Accountability Email Yet</p>
+                      ) : (
+                        <p className="tx-16">{partner_email}</p>
+                      )}
                     </div>
                   </div>
                 </div>

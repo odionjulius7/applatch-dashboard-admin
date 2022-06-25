@@ -6,8 +6,8 @@ import SingleUser from "./Pages/SingleUser";
 
 import Users from "./Pages/Users";
 import Virality from "./Pages/Virality";
-import SignUp from "./Pages/SignUP/SignUp";
 import Login from "./Pages/Login/Login";
+import SignUp from "./Pages/SignUP/SignUp";
 
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./Layout";
@@ -29,6 +29,7 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="virality" element={<Virality />} />
                 <Route path="users" element={<Users />} />
+                <Route path="signup" element={<SignUp />} />
                 <Route
                   path="users/singleUser/:userId"
                   element={<SingleUser />}
