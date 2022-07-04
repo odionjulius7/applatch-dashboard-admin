@@ -12,40 +12,40 @@ import {
 
 const getIntroOfPage = (label) => {
   if (label === "Jan") {
-    return "Most Number Of Users For Jan";
+    return "Most Number Of Users For January";
   }
   if (label === "Feb") {
-    return "Most Number Of Users For Feb";
+    return "Most Number Of Users For Febuary";
   }
   if (label === "Mar") {
-    return "Most Number Of Users For Mar";
+    return "Most Number Of Users For March";
   }
   if (label === "Apr") {
-    return "Most Number Of Users For Apr";
+    return "Most Number Of Users For April";
   }
   if (label === "May") {
     return "Most Number Of Users For May";
   }
   if (label === "Jun") {
-    return "Most Number Of Users For Jun";
+    return "Most Number Of Users For June";
   }
   if (label === "Jul") {
-    return "Most Number Of Users For Jul";
+    return "Most Number Of Users For July";
   }
   if (label === "Aug") {
-    return "Most Number Of Users For Aug";
+    return "Most Number Of Users For August";
   }
   if (label === "Sept") {
-    return "Most Number Of Users For Sept";
+    return "Most Number Of Users For September";
   }
   if (label === "Oct") {
-    return "Most Number Of Users For Oct";
+    return "Most Number Of Users For October";
   }
   if (label === "Nov") {
-    return "Most Number Of Users For Nov";
+    return "Most Number Of Users For November";
   }
   if (label === "Dec") {
-    return "Most Number Of Users For Dec";
+    return "Most Number Of Users For December";
   }
   return "";
 };
@@ -57,7 +57,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         style={{
           background: "rgba(0,0,0,0.6)",
           color: "white",
-          padding: "10px",
+          padding: "5px",
+          width: "10rem ",
         }}
         className="custom-tooltip"
       >

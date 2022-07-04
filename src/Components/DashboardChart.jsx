@@ -19,15 +19,13 @@ export default function DashboardChart() {
       // console.log(response.data);
       const { data } = response?.data;
       const data1 = Object.entries(data).map((item) => {
+        // object.entries returns arrays of array, so at each item position you return the index u want
         return {
-          name: item[0],
+          name: item[0].slice(0, 3),
           amt: item[1],
         };
       });
-      // const data1 = Object.values(data).map((key) => ({
-      //   name: key,
-      //   amt: data[key],
-      // }));
+
       setDataMain(data1);
     } catch (err) {
       console.log(err.response);
@@ -38,6 +36,14 @@ export default function DashboardChart() {
     fetchUsersMonthly();
   }, []);
 
+  const totalUsers = dataMain.reduce((total, item) => {
+    const { amt } = item;
+    total += amt;
+    return total;
+  }, 0);
+
+  // console.log(totalUsers);
+
   return (
     <div className="row">
       <div className="col-lg-6 col-md-12 grid-margin stretch-card">
@@ -45,7 +51,7 @@ export default function DashboardChart() {
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-start mb-2">
               <h6 className="card-title mb-0">Main Users In Every Month</h6>
-              <h3 className="mb-4">5,000</h3>
+              <h3 className="mb-4">{totalUsers}</h3>
             </div>
             {/* <!-- <p className="text-muted mb-4">Sales are activities related to selling or the number of goods or services sold in a given time period.</p> --> */}
             <div className="monthly-sales-chart-wrapper">

@@ -9,7 +9,11 @@ export default function UserProfile({
   scheduleLock,
   lockDaily,
 }) {
-  // console.log(lockNow);
+  // Math.floor(time /60)
+
+  const lockNowSlice = lockNow.slice(0, 10);
+  const lockDailySlice = lockDaily.slice(0, 10);
+  const scheduleLockSlice = scheduleLock.slice(0, 10);
   return (
     <div className="row profile-body">
       <div className="mb-4 col-md-4 col-xl-3 left-wrapper">
@@ -60,46 +64,54 @@ export default function UserProfile({
               </div>
               <div className="card-body">
                 <div>
-                  {lockNow.map((item) => {
-                    return (
-                      <>
-                        <div
-                          key={item.id}
-                          className="d-flex justify-content-between"
-                        >
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              {" "}
-                              Date:
-                            </span>{" "}
-                            {moment(item.createdAt).format("LLL")}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Status:
-                            </span>{" "}
-                            {item.status}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Duration:
-                            </span>{" "}
-                            {item.duration}hr
-                          </p>
-                        </div>
-                        <hr />
-                      </>
-                    );
-                  })}
+                  {lockNow.length === 0 ? (
+                    <p>No Lock Now Yet</p>
+                  ) : (
+                    lockNowSlice.map((item) => {
+                      return (
+                        <>
+                          <div
+                            key={item.id}
+                            className="d-flex justify-content-between"
+                          >
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                {" "}
+                                Date:
+                              </span>{" "}
+                              {moment(item.createdAt).format("LLL")}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Status:
+                              </span>{" "}
+                              {item.status}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Duration:
+                              </span>{" "}
+                              {item.duration < 60 ? (
+                                <em>{item.duration} min</em>
+                              ) : (
+                                <em>{Math.floor(item.duration / 60)}hr</em>
+                              )}
+                            </p>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>
@@ -122,46 +134,54 @@ export default function UserProfile({
               <div className="card-body">
                 <div>
                   {/* <p className="">Lock By Daily Limit:</p> */}
-                  {lockDaily.map((item) => {
-                    return (
-                      <>
-                        <div
-                          key={item.id}
-                          className="d-flex justify-content-between"
-                        >
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              {" "}
-                              Date:
-                            </span>{" "}
-                            {moment(item.createdAt).format("LLL")}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Status:
-                            </span>{" "}
-                            {item.status}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Duration:
-                            </span>{" "}
-                            {item.duration}hr
-                          </p>
-                        </div>
-                        <hr />
-                      </>
-                    );
-                  })}
+                  {lockDaily.length === 0 ? (
+                    <p>No Lock By Daily Limit Yet</p>
+                  ) : (
+                    lockDailySlice.map((item) => {
+                      return (
+                        <>
+                          <div
+                            key={item.id}
+                            className="d-flex justify-content-between"
+                          >
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                {" "}
+                                Date:
+                              </span>{" "}
+                              {moment(item.createdAt).format("LLL")}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Status:
+                              </span>{" "}
+                              {item.status}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Duration:
+                              </span>{" "}
+                              {item.duration < 60 ? (
+                                <em>{item.duration} min</em>
+                              ) : (
+                                <em>{Math.floor(item.duration / 60)}hr</em>
+                              )}
+                            </p>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>
@@ -183,46 +203,54 @@ export default function UserProfile({
               <div className="card-body">
                 <div>
                   {/* <p className="">Schedule Lock:</p> */}
-                  {scheduleLock.map((item) => {
-                    return (
-                      <>
-                        <div
-                          key={item.id}
-                          className="d-flex justify-content-between"
-                        >
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              {" "}
-                              Date:
-                            </span>{" "}
-                            {moment(item.createdAt).format("LLL")}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Status:
-                            </span>{" "}
-                            {item.status}
-                          </p>
-                          <p className="">
-                            <span
-                              style={{ fontSize: "15px" }}
-                              className="pr-2 badge"
-                            >
-                              Duration:
-                            </span>{" "}
-                            {item.duration}hr
-                          </p>
-                        </div>
-                        <hr />
-                      </>
-                    );
-                  })}
+                  {scheduleLock.length === 0 ? (
+                    <p>No Schedule Lock yet</p>
+                  ) : (
+                    scheduleLockSlice.map((item) => {
+                      return (
+                        <>
+                          <div
+                            key={item.id}
+                            className="d-flex justify-content-between"
+                          >
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                {" "}
+                                Date:
+                              </span>{" "}
+                              {moment(item.createdAt).format("LLL")}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Status:
+                              </span>{" "}
+                              {item.status}
+                            </p>
+                            <p className="">
+                              <span
+                                style={{ fontSize: "15px" }}
+                                className="pr-2 badge"
+                              >
+                                Duration:
+                              </span>{" "}
+                              {item.duration < 60 ? (
+                                <em>{item.duration} min</em>
+                              ) : (
+                                <em>{Math.floor(item.duration / 60)}hr</em>
+                              )}
+                            </p>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>

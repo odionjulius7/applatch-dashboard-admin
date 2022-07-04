@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FiCodesandbox, FiUsers, FiLogOut } from "react-icons/fi";
 
 import { SiGnuprivacyguard } from "react-icons/si";
@@ -29,10 +29,19 @@ export default function SidebarNav() {
   return (
     <nav className="sidebar">
       <div className="sidebar-header">
-        <a href="#" className="sidebar-brand">
+        <Link
+          onClick={() => {
+            setViralityActive(false);
+            setUserActive(false);
+            setDashboradActive(true);
+            setSignup(false);
+          }}
+          to={"/"}
+          className="sidebar-brand"
+        >
           Applatch
           <span style={{ paddingLeft: "5px", color: "#727cf5" }}>Admin</span>
-        </a>
+        </Link>
         <div className="sidebar-toggler not-active">
           <span></span>
           <span></span>

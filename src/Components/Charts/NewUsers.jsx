@@ -116,7 +116,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         style={{
           background: "rgba(0,0,0,0.6)",
           color: "white",
-          padding: "10px",
+          padding: "5px",
         }}
         className="custom-tooltip"
       >
