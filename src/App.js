@@ -12,6 +12,7 @@ import SignUp from "./Pages/SignUP/SignUp";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./Layout";
 import RequireAuth from "./Components/RequireAuth";
+import { CurrentReferer } from "./Pages/CurrentReferer";
 
 //
 const USERS_URL = "/users";
@@ -27,13 +28,11 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route element={<RequireAuth />}>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="virality" element={<Virality />} />
-                <Route path="users" element={<Users />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route
-                  path="users/singleUser/:userId"
-                  element={<SingleUser />}
-                />
+                <Route path="/allReferer" element={<Virality />} />
+                <Route path="/currentReferer" element={<CurrentReferer />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/:userId" element={<SingleUser />} />
               </Route>
             </Route>
           </Routes>
@@ -45,14 +44,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <Route
-                path="*"
-                element={
-                  <main style={{ padding: "20rem", fontSize: "3rem" }}>
-                    <p>There's nothing here!</p>
-                  </main>
-                }
-              /> */
-}

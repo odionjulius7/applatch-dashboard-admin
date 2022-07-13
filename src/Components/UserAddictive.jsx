@@ -46,7 +46,7 @@ export default function UserAddictive({ addictive }) {
                                 marginRight: "8px",
                               }}
                             >
-                              Name:
+                              App Name:
                             </span>{" "}
                             {item.name}
                           </h6>

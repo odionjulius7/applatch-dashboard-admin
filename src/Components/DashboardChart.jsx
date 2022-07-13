@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import MainUsers from "./Charts/MainUsers";
 import NewUsers from "./Charts/NewUsers";
 import axios from "../API/axios";
+import DashboardNewUsersTable from "./DashboardNewUsersTable";
 
 const MONTHLY_USERS_URL = "/users/month";
 
-export default function DashboardChart() {
+export default function DashboardChart({ newUsers, isLoading }) {
   const [dataMain, setDataMain] = useState([]);
 
   const fetchUsersMonthly = async () => {
@@ -61,19 +62,10 @@ export default function DashboardChart() {
           </div>
         </div>
       </div>
-      <div className="col-lg-6 col-md-12 grid-margin stretch-card">
-        <div className="card">
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <h6 className="card-title mb-0">New Users</h6>
-              <h3 className="mb-4">899</h3>
-            </div>
-            {/* <!-- <p className="text-muted mb-4">Sales are activities related to selling or the number of goods or services sold in a given time period.</p> --> */}
-            <div className="monthly-sales-chart-wrapper">
-              {/* <canvas id="monthly-sensei-chart"></canvas> */}
-              <NewUsers />
-            </div>
-          </div>
+      <div className="col-lg-6 col-md-12 grid-margin">
+        <div className="monthly-sales-chart-wrapper">
+          {/* <canvas id="monthly-sensei-chart"></canvas> */}
+          <DashboardNewUsersTable newUsers={newUsers} isLoading={isLoading} />
         </div>
       </div>
     </div>

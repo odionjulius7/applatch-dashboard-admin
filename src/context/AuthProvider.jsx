@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-// import axios from "axios";
-import axios from "../API/axios";
+
+// import axios from "../API/axios";
 
 const AuthContext = createContext({});
 
-const USERS_URL = "/users";
+// const USERS_URL = "/users";
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});

@@ -7,6 +7,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
   const authToken = JSON.parse(localStorage.getItem("data"));
   // allowedRoles.includes(auth?.role)
+  // console.log(authToken);
   return authToken ? (
     <Outlet />
   ) : (

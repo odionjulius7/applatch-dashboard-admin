@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
+import axios from "../API/axios";
 import moment from "moment";
 import ReactPaginate from "react-paginate";
-// import "../Components/componentStyles/DashboardTable.css";
+const CURRENT_REF_URL = "/users";
+// import { getUsers } from "../Data";
 
-import axios from "../API/axios";
-
-const USERS_URL = "/users";
-
-export default function Users() {
+export function CurrentReferer() {
+  // const [users, setUsers] = useState(getUsers());
   // PAGINATION
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 20;
-  const [users, setUsers] = useState([]);
+  const [currentReferrals, setCurrentReferrals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(USERS_URL, {
+      const response = await axios.get(CURRENT_REF_URL, {
         // headers: { "x-access-token": localStorage.getItem("token") },
         headers: {
           "Content-Type": "application/json",
@@ -28,46 +27,42 @@ export default function Users() {
         },
       });
       const { data } = response?.data;
-      setUsers(data);
+      setCurrentReferrals(data);
       setIsLoading(false);
     } catch (err) {
       console.log(err.response);
     }
   };
 
-  // console.log(users.length);
+  // PAGINATION
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(currentReferrals.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(currentReferrals.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, currentReferrals]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % currentReferrals.length;
+    setItemOffset(newOffset);
+  };
 
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  // PAGINATION
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(users.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(users.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, users]);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % users.length;
-    setItemOffset(newOffset);
-  };
-
   return (
     <>
+      {" "}
       <div className="d-flex justify-left align-items-center flex-wrap grid-margin">
         <div style={{ marginRight: "20px" }}>
-          <h4 className="mb-3 mb-md-0">Users</h4>
+          <h4 className="mb-3 mb-md-0">Current Referrals</h4>
         </div>
       </div>
-
-      <div className="row mt-4"></div>
       <div className="row">
         <div className="col-lg-12 col-xl-12 stretch-card">
           <div className="card">
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-start mb-2">
-                <h6 className="card-title mb-0">Users</h6>
+                <h6 className="card-title mb-0">Referral Details</h6>
                 <a href="#" className="btn mb-3">
                   &nbsp;
                 </a>
@@ -80,16 +75,16 @@ export default function Users() {
                     <thead>
                       <tr>
                         <th className="pt-0">#</th>
-                        <th className="pt-0">NAME</th>
+                        <th className="pt-0">Name</th>
                         <th className="pt-0">Email</th>
                         <th className="pt-0">Reg. Date</th>
+                        <th className="pt-0">Current Num. Referrals</th>
+                        <th className="pt-0">Current Amount</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentItems.map((item, index) => {
-                        // if (item.role === "admin") {
-                        //   return;
-                        // }
+                      {currentItems?.map((item, index) => {
+                        // console.log(item);
                         return (
                           <tr key={item.id}>
                             <td>{index + 1}</td>
@@ -105,7 +100,11 @@ export default function Users() {
                             </td>
                             <td>{item.email}</td>
                             <td>{moment(item.createdAt).format("ll")}</td>
-                            <Outlet />
+                            <td className="pl-5">{item.referral_current}</td>
+                            <td className="pl-5">
+                              &#8358;{item.current_amount}
+                            </td>
+                            {/* <Outlet /> */}
                           </tr>
                         );
                       })}

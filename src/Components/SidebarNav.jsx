@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FiCodesandbox, FiUsers, FiLogOut } from "react-icons/fi";
+import {
+  FiCodesandbox,
+  FiUsers,
+  FiLogOut,
+  FiChevronDown,
+  FiChevronUp,
+} from "react-icons/fi";
+import "./componentStyles/SidebarNav.css";
 
 import { SiGnuprivacyguard } from "react-icons/si";
 export default function SidebarNav() {
@@ -13,28 +20,36 @@ export default function SidebarNav() {
   const [viralityActive, setViralityActive] = useState(
     JSON.parse(localStorage.getItem("viralityActive") || false)
   );
+  const [allRefer, setAllRefer] = useState(
+    JSON.parse(localStorage.getItem("allRefer") || false)
+  );
+  const [currentRefer, setCurrentRefer] = useState(
+    JSON.parse(localStorage.getItem("currentRefer") || false)
+  );
+
   const [signup, setSignup] = useState(false);
-  // const [signup, setSignup] = useState(
-  //   JSON.parse(localStorage.getItem("signup") || false)
-  // );
 
   useEffect(() => {
     localStorage.setItem("dashboradActive", JSON.stringify(dashboradActive));
     localStorage.setItem("userActive", JSON.stringify(userActive));
     localStorage.setItem("viralityActive", JSON.stringify(viralityActive));
+    localStorage.setItem("allRefer", JSON.stringify(allRefer));
+    localStorage.setItem("currentRefer", JSON.stringify(currentRefer));
 
     // localStorage.setItem("signup", JSON.stringify(signup));
-  }, [dashboradActive, userActive, viralityActive]);
+  }, [dashboradActive, userActive, viralityActive, allRefer, currentRefer]);
 
   return (
     <nav className="sidebar">
       <div className="sidebar-header">
         <Link
           onClick={() => {
-            setViralityActive(false);
+            // setViralityActive(false);
             setUserActive(false);
             setDashboradActive(true);
             setSignup(false);
+            setAllRefer(false);
+            setCurrentRefer(false);
           }}
           to={"/"}
           className="sidebar-brand"
@@ -55,10 +70,12 @@ export default function SidebarNav() {
               to={"/"}
               className="nav-link"
               onClick={() => {
-                setViralityActive(false);
+                // setViralityActive(false);
                 setUserActive(false);
                 setDashboradActive(true);
                 setSignup(false);
+                setAllRefer(false);
+                setCurrentRefer(false);
               }}
             >
               <FiCodesandbox className="link-icon" />
@@ -74,33 +91,76 @@ export default function SidebarNav() {
               aria-expanded="false"
               aria-controls="tables"
               onClick={() => {
-                setViralityActive(false);
+                // setViralityActive(false);
                 setUserActive(true);
                 setDashboradActive(false);
                 setSignup(false);
+                setAllRefer(false);
+                setCurrentRefer(false);
               }}
             >
               <FiUsers className="link-icon" />
               <span className="link-title">Users</span>
             </Link>
           </li>
-          <li className={`nav-item ${viralityActive ? "active" : ""}`}>
-            <Link
-              to={"virality"}
+          <li className="nav-item">
+            <div
+              to={""}
               className="nav-link"
               role="button"
               aria-expanded="false"
               aria-controls="tables"
-              onClick={() => {
-                setViralityActive(true);
-                setUserActive(false);
-                setDashboradActive(false);
-                setSignup(false);
-              }}
+              onClick={() => setViralityActive((prev) => !prev)}
             >
               <FiUsers className="link-icon" />
-              <span className="link-title">Virality</span>
-            </Link>
+              <span className="link-title">Referrals</span>
+              {viralityActive ? (
+                <FiChevronDown style={{ fontSize: "1.4rem" }} />
+              ) : (
+                <FiChevronUp style={{ fontSize: "1.4rem" }} />
+              )}
+            </div>
+            {/* submenu */}
+            <div
+              className="collapse-menu"
+              id={viralityActive ? "id-collapse" : ""}
+            >
+              <ul className="sub-menu">
+                <li className={`nav-item ${allRefer ? "active" : ""}`}>
+                  <Link
+                    to="allReferer"
+                    className="nav-link"
+                    onClick={() => {
+                      // setViralityActive(false);
+                      setUserActive(false);
+                      setDashboradActive(false);
+                      setSignup(false);
+                      setAllRefer(true);
+                      setCurrentRefer(false);
+                    }}
+                  >
+                    All referrals
+                  </Link>
+                </li>
+                <li className={`nav-item ${currentRefer ? "active" : ""}`}>
+                  <Link
+                    to="currentReferer"
+                    className="nav-link"
+                    onClick={() => {
+                      // setViralityActive(false);
+                      setUserActive(false);
+                      setDashboradActive(false);
+                      setSignup(false);
+                      setAllRefer(false);
+                      setCurrentRefer(true);
+                    }}
+                  >
+                    Current referrals
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            {/* submenu */}
           </li>
 
           <li className="nav-item nav-category">Account</li>
@@ -111,9 +171,11 @@ export default function SidebarNav() {
               className="nav-link"
               onClick={() => {
                 setSignup(true);
-                setViralityActive(false);
+                // setViralityActive(false);
                 setUserActive(false);
                 setDashboradActive(false);
+                setAllRefer(false);
+                setCurrentRefer(false);
               }}
             >
               <SiGnuprivacyguard className="link-icon" />
@@ -125,7 +187,12 @@ export default function SidebarNav() {
               <a href="" className="nav-link">
                 <FiLogOut className="link-icon" />
                 <span
-                  onClick={() => window.localStorage.clear()}
+                  onClick={() => {
+                    // delete everythin
+                    // window.localStorage.clear();
+                    // delete something specific
+                    localStorage.removeItem("data");
+                  }}
                   className="link-title"
                 >
                   Sign Out

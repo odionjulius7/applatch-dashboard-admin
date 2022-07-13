@@ -59,24 +59,29 @@ const Login = () => {
       const response = await axios.post(LOGIN_URL, { email, password });
       const { data } = response.data;
       localStorage.setItem("data", JSON.stringify(data?.token));
+      console.log(data);
       setValues({
         email: "",
         password: "",
       });
-      setIsLoading(true);
       setErrMsg(response?.data.message);
+      setIsLoading(false);
       // navigates to where the user clicked before redirected to home page or the '/'
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
+        setIsLoading(false);
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
+        setIsLoading(false);
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
         console.log(errMsg);
+        setIsLoading(false);
       } else {
         setErrMsg("Login Failed");
+        setIsLoading(false);
       }
     }
   };

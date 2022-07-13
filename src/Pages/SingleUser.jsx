@@ -11,22 +11,26 @@ import { AiOutlineBarChart } from "react-icons/ai";
 
 import { useParams } from "react-router-dom";
 
+const USER_DETAILS_ID = "/user";
+const LOCK_NOW_HISTORY = "/lockhistory";
+const LOCK_DAILY_HISTORY = "/lockdailyhistory";
+const SCHEDULE_LOCK_HISTORY = "/schedulelockhistory";
+const USER_LOCK_HISTORY = "/history";
+
 export default function SingleUser() {
   const [profile, setProfile] = useState(true);
   const [addictive, setAddictive] = useState(false);
   const [accountability, setAccountability] = useState(false);
   const [analyses, setAnalyses] = useState(false);
   //
-  const USER_DETAILS_ID = "/user";
-  const LOCK_NOW_HISTORY = "/lockhistory";
-  const LOCK_DAILY_HISTORY = "/lockdailyhistory";
-  const SCHEDULE_LOCK_HISTORY = "/schedulelockhistory";
+
   //
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [lockNow, setLockNow] = useState([]);
   const [lockDaily, setLockDaily] = useState([]);
   const [scheduleLock, setScheduleLock] = useState([]);
+  // const [userLockHistory, setUserLockHistory] = useState([]);
 
   const fetchUserById = async () => {
     try {
@@ -78,7 +82,7 @@ export default function SingleUser() {
 
   const scheduleLockHistory = async () => {
     try {
-      const response = await axios.get(`${LOCK_DAILY_HISTORY}/${userId}`, {
+      const response = await axios.get(`${SCHEDULE_LOCK_HISTORY}/${userId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
@@ -91,12 +95,32 @@ export default function SingleUser() {
       console.log(err.response);
     }
   };
+  //
+
+  // const fetchUserLockHistory = async () => {
+  //   try {
+  //     const response = await axios.get(`${SCHEDULE_LOCK_HISTORY}/${userId}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
+  //       },
+  //     });
+  //     // const { data } = response?.data;
+  //     console.log(response);
+  //     // setUserLockHistory(data);
+  //   } catch (err) {
+  //     console.log(err.response);
+  //   }
+  // };
+
+  //
 
   useEffect(() => {
     fetchUserById();
     lockedNowHistory();
     lockDailyHistory();
     scheduleLockHistory();
+    // fetchUserLockHistory();
   }, [userId]);
 
   // useEffect(() => {

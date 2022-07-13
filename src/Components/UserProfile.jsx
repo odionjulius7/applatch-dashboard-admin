@@ -77,7 +77,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2"
                               >
                                 {" "}
                                 Date:
@@ -87,7 +87,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Status:
                               </span>{" "}
@@ -96,7 +96,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Duration:
                               </span>{" "}
@@ -147,7 +147,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 {" "}
                                 Date:
@@ -157,7 +157,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Status:
                               </span>{" "}
@@ -166,7 +166,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Duration:
                               </span>{" "}
@@ -189,7 +189,6 @@ export default function UserProfile({
           <div className="col-md-12 grid-margin">
             <div className="card rounded">
               <div className="card-header">
-                {/* <!-- <h6><span className="badge badge-pill badge-light mb-2">Medicine and Surgery, 100 Level, University of Lagos</span></h6> --> */}
                 <div className="d-flex align-items-start justify-content-between">
                   <div className="d-flex align-items-start">
                     <h6>
@@ -216,7 +215,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 {" "}
                                 Date:
@@ -226,7 +225,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Status:
                               </span>{" "}
@@ -235,7 +234,7 @@ export default function UserProfile({
                             <p className="">
                               <span
                                 style={{ fontSize: "15px" }}
-                                className="pr-2 badge"
+                                className="pr-2 "
                               >
                                 Duration:
                               </span>{" "}

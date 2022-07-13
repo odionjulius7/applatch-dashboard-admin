@@ -1,9 +1,30 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-export default function DashboardTable({ users }) {
+import "../Components/componentStyles/DashboardTable.css";
+
+export default function DashboardTable({ topReferrals, isLoading }) {
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(topReferrals.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(topReferrals.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, topReferrals]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % topReferrals.length;
+    setItemOffset(newOffset);
+  };
+
   return (
-    <div className="row">
+    <div className="row mt-3">
       <div className="col-lg-12 col-xl-12 stretch-card">
         <div className="card">
           <div className="card-body">
@@ -13,38 +34,60 @@ export default function DashboardTable({ users }) {
                 &nbsp;
               </a>
             </div>
-            <div className="table-responsive">
-              <table className="table table-hover mb-0">
-                <thead>
-                  <tr>
-                    <th className="pt-0">#</th>
-                    <th className="pt-0">Name</th>
-                    <th className="pt-0">Email</th>
-                    <th className="pt-0">Reg. Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users?.map((item, index) => {
-                    // console.log(item);
-                    return (
-                      <tr key={item.id}>
-                        <td>{index + 1}</td>
-                        <td>
-                          <Link to={`/users/singleUser/${item.id}`}>
-                            {item.name}
-                          </Link>
-                        </td>
-                        <td>{item.email}</td>
-                        <td>{item.joined}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            {isLoading ? (
+              <p>Referrals Loading...</p>
+            ) : (
+              <div className="table-responsive">
+                <table className="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th className="pt-0">#</th>
+                      <th className="pt-0">Name</th>
+                      <th className="pt-0">Email</th>
+                      <th className="pt-0">Reg. Date</th>
+                      <th className="pt-0">Num. Of Referrals</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentItems?.map((item, index) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <Link to={`/${item.id}`}>
+                              {item.name === null
+                                ? item.email.slice(0, item["email"].length - 10)
+                                : item.name}
+                            </Link>
+                          </td>
+                          <td>{item.email}</td>
+                          <td>{moment(item.createdAt).format("ll")}</td>
+                          <td className="pl-5">{item.referral_num}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+        // styling the whole btns, note: always know when to use thw class with link a tags and without for just li tags
+        containerClassName="pagination"
+        pageLinkClassName="page-num"
+        previousLinkClassName="page-num"
+        nextLinkClassName="page-num"
+        activeLinkClassName="active"
+      />
     </div>
   );
 }
