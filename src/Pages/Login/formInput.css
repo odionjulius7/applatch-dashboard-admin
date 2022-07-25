@@ -1,22 +1,22 @@
-.signUp .formInput {
+.signUp1 .formInput {
   display: flex;
   flex-direction: column;
   width: 280px;
 }
 
-.signUp .formInput input {
+.signUp1 .formInput input {
   padding: 15px;
   margin: 10px 0px;
   border-radius: 5px;
   border: 1px solid gray;
 }
 
-.signUp .formInput label {
+.signUp1 .formInput label {
   font-size: 12px;
   color: gray;
 }
 
-.signUp .formInput span {
+.signUp1 .formInput span {
   font-size: 12px;
   padding: 3px;
   color: red;

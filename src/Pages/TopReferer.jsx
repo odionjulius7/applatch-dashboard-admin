@@ -1,60 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
-import axios from "../API/axios";
+import AuthContext from "../context/AuthProvider";
 import moment from "moment";
 import ReactPaginate from "react-paginate";
-const CURRENT_REF_URL = "/users";
-// import { getUsers } from "../Data";
+import "./styles/topRef.css";
+import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
-export function CurrentReferer() {
-  // const [users, setUsers] = useState(getUsers());
+export function TopReferer() {
+  const { topReferrals, isLoading, setTopReferralsPage, topReferralsPage } =
+    useContext(AuthContext);
   // PAGINATION
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 20;
-  const [currentReferrals, setCurrentReferrals] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchUsers = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(CURRENT_REF_URL, {
-        // headers: { "x-access-token": localStorage.getItem("token") },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
-        },
-      });
-      const { data } = response?.data;
-      setCurrentReferrals(data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
 
   // PAGINATION
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(currentReferrals.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(currentReferrals.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, currentReferrals]);
+    setCurrentItems(topReferrals.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(topReferrals.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, topReferrals]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % currentReferrals.length;
+    const newOffset = (event.selected * itemsPerPage) % topReferrals.length;
     setItemOffset(newOffset);
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
   return (
     <>
       {" "}
       <div className="d-flex justify-left align-items-center flex-wrap grid-margin">
         <div style={{ marginRight: "20px" }}>
-          <h4 className="mb-3 mb-md-0">Current Referrals</h4>
+          <h4 className="mb-3 mb-md-0">Users With Most Referrals</h4>
         </div>
       </div>
       <div className="row">
@@ -78,13 +56,13 @@ export function CurrentReferer() {
                         <th className="pt-0">Name</th>
                         <th className="pt-0">Email</th>
                         <th className="pt-0">Reg. Date</th>
-                        <th className="pt-0">Current Num. Referrals</th>
-                        <th className="pt-0">Current Amount</th>
+                        <th className="pt-0">Num. Of Referrals</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentItems?.map((item, index) => {
-                        // console.log(item);
+                        if (item.referral_num < 1) return;
+
                         return (
                           <tr key={item.id}>
                             <td>{index + 1}</td>
@@ -100,11 +78,7 @@ export function CurrentReferer() {
                             </td>
                             <td>{item.email}</td>
                             <td>{moment(item.createdAt).format("ll")}</td>
-                            <td className="pl-5">{item.referral_current}</td>
-                            <td className="pl-5">
-                              &#8358;{item.current_amount}
-                            </td>
-                            {/* <Outlet /> */}
+                            <td className="pl-5">{item.referral_num}</td>
                           </tr>
                         );
                       })}
@@ -115,7 +89,27 @@ export function CurrentReferer() {
             </div>
           </div>
         </div>
-        <ReactPaginate
+        {/* backend pagination */}
+        <div className="backend-pagination">
+          <span
+            className={`forward-paginate  ${
+              topReferralsPage === 1 && "disable-user"
+            }`}
+            onClick={() => setTopReferralsPage((prev) => prev - 1)}
+          >
+            <MdArrowBackIosNew /> Previous
+          </span>
+          <span
+            className={`forward-paginate mx-4  ${
+              topReferrals.length === 0 && "disable-user"
+            }`}
+            onClick={() => setTopReferralsPage((prev) => prev + 1)}
+          >
+            Next <MdArrowForwardIos />
+          </span>
+        </div>
+        {/* end of backend pagination */}
+        {/* <ReactPaginate
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
@@ -129,7 +123,7 @@ export function CurrentReferer() {
           previousLinkClassName="page-num"
           nextLinkClassName="page-num"
           activeLinkClassName="active"
-        />
+        /> */}
       </div>
     </>
   );

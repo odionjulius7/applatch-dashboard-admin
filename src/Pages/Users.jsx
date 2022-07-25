@@ -1,45 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import moment from "moment";
 import ReactPaginate from "react-paginate";
-// import "../Components/componentStyles/DashboardTable.css";
-
-import axios from "../API/axios";
-
-const USERS_URL = "/users";
+import AuthContext from "../context/AuthProvider";
+import "./styles/users.css";
+import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
 
 export default function Users() {
+  const { users, isLoading, setUsersPage, usersPage } = useContext(AuthContext);
+  // console.log(users.length);
   // PAGINATION
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 20;
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchUsers = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(USERS_URL, {
-        // headers: { "x-access-token": localStorage.getItem("token") },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
-        },
-      });
-      const { data } = response?.data;
-      setUsers(data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-
-  // console.log(users.length);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   // PAGINATION
   useEffect(() => {
@@ -80,16 +54,18 @@ export default function Users() {
                     <thead>
                       <tr>
                         <th className="pt-0">#</th>
-                        <th className="pt-0">NAME</th>
+                        <th className="pt-0">Name</th>
                         <th className="pt-0">Email</th>
                         <th className="pt-0">Reg. Date</th>
+                        <th className="pt-0">Current Num. Referrals</th>
+                        <th className="pt-0">Current Amount</th>
+                        <th className="pt-0">Total Referrals</th>
+                        <th className="pt-0">Total Amount</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentItems.map((item, index) => {
-                        // if (item.role === "admin") {
-                        //   return;
-                        // }
+                      {currentItems?.map((item, index) => {
+                        // console.log(item);
                         return (
                           <tr key={item.id}>
                             <td>{index + 1}</td>
@@ -105,7 +81,13 @@ export default function Users() {
                             </td>
                             <td>{item.email}</td>
                             <td>{moment(item.createdAt).format("ll")}</td>
-                            <Outlet />
+                            <td className="pl-5">{item.referral_current}</td>
+                            <td className="pl-5">
+                              &#8358;{item.current_amount}
+                            </td>
+                            <td className="pl-5">{item.referral_num}</td>
+                            <td className="pl-5">&#8358;{item.total_amount}</td>
+                            {/* <Outlet /> */}
                           </tr>
                         );
                       })}
@@ -116,7 +98,25 @@ export default function Users() {
             </div>
           </div>
         </div>
-        <ReactPaginate
+        {/* backend pagination */}
+        <div className="backend-pagination">
+          <span
+            className={`forward-paginate  ${usersPage === 1 && "disable-user"}`}
+            onClick={() => setUsersPage((prev) => prev - 1)}
+          >
+            <MdArrowBackIosNew /> Previous
+          </span>
+          <span
+            className={`forward-paginate mx-4  ${
+              users.length === 0 && "disable-user"
+            }`}
+            onClick={() => setUsersPage((prev) => prev + 1)}
+          >
+            Next <MdArrowForwardIos />
+          </span>
+        </div>
+        {/* end of backend pagination */}
+        {/* <ReactPaginate
           breakLabel="..."
           nextLabel="next >"
           onPageChange={handlePageClick}
@@ -130,7 +130,7 @@ export default function Users() {
           previousLinkClassName="page-num"
           nextLinkClassName="page-num"
           activeLinkClassName="active"
-        />
+        /> */}
       </div>
     </>
   );

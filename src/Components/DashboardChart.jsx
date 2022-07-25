@@ -1,41 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import MainUsers from "./Charts/MainUsers";
 import NewUsers from "./Charts/NewUsers";
 import axios from "../API/axios";
 import DashboardNewUsersTable from "./DashboardNewUsersTable";
+import AuthContext from "../context/AuthProvider";
 
-const MONTHLY_USERS_URL = "/users/month";
-
-export default function DashboardChart({ newUsers, isLoading }) {
-  const [dataMain, setDataMain] = useState([]);
-
-  const fetchUsersMonthly = async () => {
-    try {
-      const response = await axios.get(MONTHLY_USERS_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("data"))}`,
-        },
-      });
-      // console.log(response.data);
-      const { data } = response?.data;
-      const data1 = Object.entries(data).map((item) => {
-        // object.entries returns arrays of array, so at each item position you return the index u want
-        return {
-          name: item[0].slice(0, 3),
-          amt: item[1],
-        };
-      });
-
-      setDataMain(data1);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsersMonthly();
-  }, []);
+export default function DashboardChart() {
+  const { newUsers, isLoading, dataMain } = useContext(AuthContext);
 
   const totalUsers = dataMain.reduce((total, item) => {
     const { amt } = item;

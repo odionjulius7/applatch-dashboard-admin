@@ -1,15 +1,14 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import FormInput from "./FormInput";
 import "./Login.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // import axios from "axios";
 import axios from "../../API/axios";
-import UseAuth from "../../Hooks/UseAuth";
+// import UseAuth from "../../Hooks/UseAuth";
 
 const LOGIN_URL = "/login";
 
 const Login = () => {
-  const { logged, setLogged } = UseAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -87,21 +86,19 @@ const Login = () => {
   };
 
   return (
-    <div className="page-content">
-      <form className="signUp" onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        {inputs.map((input) => (
-          <FormInput
-            key={input.id}
-            {...input}
-            value={values[input.name]}
-            onChange={onChange}
-          />
-        ))}
-        <button>{isLoading ? "Loading" : "Submit"}</button>
-        <p style={{ color: "red" }}>{errMsg}</p>
-      </form>
-    </div>
+    <form className="signUp1" onSubmit={handleSubmit}>
+      <h1>Login</h1>
+      {inputs.map((input) => (
+        <FormInput
+          key={input.id}
+          {...input}
+          value={values[input.name]}
+          onChange={onChange}
+        />
+      ))}
+      <button>{isLoading ? "Loading" : "Submit"}</button>
+      <p style={{ color: "red" }}>{errMsg}</p>
+    </form>
   );
 };
 

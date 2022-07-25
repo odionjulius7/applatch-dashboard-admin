@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
+import React, { useState, useEffect, useContext } from "react";
+// import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import AuthContext from "../context/AuthProvider";
 
-import "../Components/componentStyles/DashboardTable.css";
+export default function DashboardTable() {
+  const { topReferrals, isLoading } = useContext(AuthContext);
 
-export default function DashboardTable({ topReferrals, isLoading }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -18,10 +19,10 @@ export default function DashboardTable({ topReferrals, isLoading }) {
     setPageCount(Math.ceil(topReferrals.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, topReferrals]);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % topReferrals.length;
-    setItemOffset(newOffset);
-  };
+  // const handlePageClick = (event) => {
+  //   const newOffset = (event.selected * itemsPerPage) % topReferrals.length;
+  //   setItemOffset(newOffset);
+  // };
 
   return (
     <div className="row mt-3">
@@ -50,6 +51,8 @@ export default function DashboardTable({ topReferrals, isLoading }) {
                   </thead>
                   <tbody>
                     {currentItems?.map((item, index) => {
+                      if (item.referral_num < 1) return;
+
                       return (
                         <tr key={item.id}>
                           <td>{index + 1}</td>
@@ -73,7 +76,7 @@ export default function DashboardTable({ topReferrals, isLoading }) {
           </div>
         </div>
       </div>
-      <ReactPaginate
+      {/* <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
         onPageChange={handlePageClick}
@@ -87,7 +90,7 @@ export default function DashboardTable({ topReferrals, isLoading }) {
         previousLinkClassName="page-num"
         nextLinkClassName="page-num"
         activeLinkClassName="active"
-      />
+      /> */}
     </div>
   );
 }

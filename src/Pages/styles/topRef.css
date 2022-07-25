@@ -1,0 +1,20 @@
+.backend-pagination {
+  text-align: end;
+  margin: 30px 20px 0px 0px;
+}
+
+.forward-paginate {
+  font-size: 18px;
+  color: blue;
+  cursor: pointer;
+  padding: 5px;
+}
+.forward-paginate:hover {
+  color: #000000;
+}
+
+.disable-user {
+  pointer-events: none;
+  color: gray;
+  background: darkgray;
+}

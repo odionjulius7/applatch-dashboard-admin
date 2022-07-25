@@ -103,7 +103,26 @@ export default function SidebarNav() {
               <span className="link-title">Users</span>
             </Link>
           </li>
-          <li className="nav-item">
+          <li className={`nav-item ${currentRefer ? "active" : ""}`}>
+            <Link
+              to={"topReferrals"}
+              className="nav-link"
+              role="button"
+              aria-expanded="false"
+              aria-controls="tables"
+              onClick={() => {
+                setUserActive(false);
+                setDashboradActive(false);
+                setSignup(false);
+                setAllRefer(false);
+                setCurrentRefer(true);
+              }}
+            >
+              <FiUsers className="link-icon" />
+              <span className="link-title">Top Referrals</span>
+            </Link>
+          </li>
+          {/* <li className="nav-item">
             <div
               to={""}
               className="nav-link"
@@ -120,7 +139,6 @@ export default function SidebarNav() {
                 <FiChevronUp style={{ fontSize: "1.4rem" }} />
               )}
             </div>
-            {/* submenu */}
             <div
               className="collapse-menu"
               id={viralityActive ? "id-collapse" : ""}
@@ -160,8 +178,7 @@ export default function SidebarNav() {
                 </li>
               </ul>
             </div>
-            {/* submenu */}
-          </li>
+          </li> */}
 
           <li className="nav-item nav-category">Account</li>
 

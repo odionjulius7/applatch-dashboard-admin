@@ -1,6 +1,6 @@
-.signUp {
-  width: 60%;
-  margin: 5rem auto;
+.signUp1 {
+  width: 40vw !important;
+  margin: 10rem auto !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,34 +13,6 @@
     url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
   background-size: cover;
   background-position: center;
-}
-
-/* .goToSignUp {
-  cursor: pointer;
-  background: gray;
-  width: 100px;
-  margin: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  height: 30px;
-}
-
-.goToSignUp span {
-  font-weight: 500;
-  padding: 3rem 0.5rem !important;
-  color: #000;
-}
-
-.goToSignUp span:hover {
-  color: beige;
-} */
-
-form {
-  background-color: white;
-  padding: 0px 60px;
-  border-radius: 10px;
 }
 
 h1 {
